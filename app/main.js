@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
         break;
         case "watershed":
             processWatershed(currentImageData, canvas.width, canvas.height, resultCanvas);
-            break;
+        break;
       default:
         alert("Algoritmo selecionado ainda não foi implementado.");
     }
