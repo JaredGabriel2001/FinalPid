@@ -1,12 +1,4 @@
-/**
- * Processa a imagem usando o algoritmo de Marr-Hildreth.
- * @param {ImageData} imageData - Dados da imagem original.
- * @param {number} width - Largura da imagem.
- * @param {number} height - Altura da imagem.
- * @param {HTMLCanvasElement} resultCanvas - Canvas onde o resultado será exibido.
- */
 function processMarrHildreth(imageData, width, height, resultCanvas) {
-    // Converte para escala de cinza
     let grayData = toGrayscale(imageData);
   
     // Suavização: aplica filtro Gaussiano para reduzir ruído
@@ -15,8 +7,6 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
     let gaussian = createGaussianKernel(sigma, kernelSize);
     let blurred = convolute(grayData, width, height, gaussian, kernelSize, kernelSize);
   
-    // Aplica operador Laplaciano.
-    // Note que usamos um kernel com maior sensibilidade: [1,1,1,1,-8,1,1,1,1]
     let laplacianKernel = [
       1,  1, 1,
       1, -8, 1,
@@ -30,12 +20,10 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
       let absVal = Math.abs(laplacian[i]);
       if (absVal > maxVal) maxVal = absVal;
     }
-    let threshold = 0.1 * maxVal; // ajuste esse fator se necessário
+    let threshold = 0.1 * maxVal; 
   
-    // Detecta os zero-crossings
     let edges = detectZeroCrossings(laplacian, width, height, threshold);
   
-    // Exibe o resultado: bordas em branco sobre fundo preto
     let resultCtx = resultCanvas.getContext('2d');
     let resultImage = resultCtx.createImageData(width, height);
     for (let i = 0; i < edges.length; i++) {
@@ -48,9 +36,6 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
     resultCtx.putImageData(resultImage, 0, 0);
   }
   
-  /* Funções auxiliares para Marr-Hildreth */
-  
-  // Converte a imagem para escala de cinza (Float32Array)
   function toGrayscale(imageData) {
     const data = imageData.data;
     const gray = new Float32Array(imageData.width * imageData.height);
@@ -62,7 +47,6 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
     return gray;
   }
   
-  // Cria um kernel Gaussiano
   function createGaussianKernel(sigma, size) {
     const kernel = [];
     const mean = Math.floor(size / 2);
@@ -75,11 +59,9 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
         sum += value;
       }
     }
-    // Normaliza o kernel
     return kernel.map(val => val / sum);
   }
   
-  // Função de convolução para imagens representadas como array 1D (Float32Array)
   function convolute(input, width, height, kernel, kWidth, kHeight) {
     const output = new Float32Array(width * height);
     const halfKW = Math.floor(kWidth / 2);
@@ -105,7 +87,6 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
     return output;
   }
   
-  // Detecta zero-crossings na imagem do Laplaciano usando um threshold dinâmico
   function detectZeroCrossings(image, width, height, threshold) {
     const output = new Uint8Array(width * height);
     for (let y = 1; y < height - 1; y++) {
@@ -113,7 +94,7 @@ function processMarrHildreth(imageData, width, height, resultCanvas) {
         const idx = y * width + x;
         let current = image[idx];
         let foundZeroCrossing = false;
-        // Verifica os 8 vizinhos
+
         for (let j = -1; j <= 1; j++) {
           for (let i = -1; i <= 1; i++) {
             if(i === 0 && j === 0) continue;

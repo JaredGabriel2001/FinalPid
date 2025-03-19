@@ -1,11 +1,3 @@
-/**
- * Processa a imagem utilizando o Método de Otsu.
- * Converte para binário e conta os objetos na imagem.
- * @param {ImageData} imageData - Dados da imagem original.
- * @param {number} width - Largura da imagem.
- * @param {number} height - Altura da imagem.
- * @param {HTMLCanvasElement} resultCanvas - Canvas onde o resultado será exibido.
- */
 function processOtsu(imageData, width, height, resultCanvas) {
     // Converte a imagem para escala de cinza
     let grayData = toGrayscale(imageData);

@@ -1,18 +1,7 @@
-/**
- * Processa a imagem utilizando o algoritmo Watershed.
- * @param {ImageData} imageData - Dados da imagem original.
- * @param {number} width - Largura da imagem.
- * @param {number} height - Altura da imagem.
- * @param {HTMLCanvasElement} resultCanvas - Canvas onde o resultado será exibido.
- */
 function processWatershed(imageData, width, height, resultCanvas) {
-    // 1. Converte para escala de cinza
     let gray = toGrayscale(imageData, width, height);
     
-    // 2. Calcula a magnitude do gradiente usando o operador Sobel
     let grad = computeGradient(gray, width, height);
-    
-    // 3. Identifica marcadores: pixels com gradiente baixo e que sejam mínimos locais
     let markers = new Int32Array(width * height);
     markers.fill(-1); // -1 indica não atribuído
     let markerThreshold = 20; // valor arbitrário para considerar uma região interna
@@ -41,14 +30,12 @@ function processWatershed(imageData, width, height, resultCanvas) {
       }
     }
     
-    // 4. Ordena os pixels pelo valor do gradiente (ordem crescente)
     let indices = new Array(width * height);
     for (let i = 0; i < width * height; i++) {
       indices[i] = i;
     }
     indices.sort((a, b) => grad[a] - grad[b]);
     
-    // 5. Inunda a imagem (flooding): atribui rótulos baseando-se nos vizinhos
     for (let k = 0; k < indices.length; k++) {
       let idx = indices[k];
       let x = idx % width;
@@ -77,7 +64,6 @@ function processWatershed(imageData, width, height, resultCanvas) {
       }
     }
     
-    // 6. Gera a imagem de saída: cada região (rótulo > 0) recebe uma cor aleatória, fronteiras em preto
     let resultCtx = resultCanvas.getContext('2d');
     let resultImage = resultCtx.createImageData(width, height);
     let colors = {};
@@ -96,7 +82,6 @@ function processWatershed(imageData, width, height, resultCanvas) {
         resultImage.data[offset + 2] = col[2];
         resultImage.data[offset + 3] = 255;
       } else {
-        // Fronteiras ou fundo: cor preta
         resultImage.data[offset] = 0;
         resultImage.data[offset + 1] = 0;
         resultImage.data[offset + 2] = 0;
@@ -106,9 +91,6 @@ function processWatershed(imageData, width, height, resultCanvas) {
     resultCtx.putImageData(resultImage, 0, 0);
   }
   
-  /* Funções auxiliares */
-  
-  // Converte a imagem para escala de cinza (Float32Array)
   function toGrayscale(imageData, width, height) {
     const data = imageData.data;
     let gray = new Float32Array(width * height);
@@ -121,10 +103,9 @@ function processWatershed(imageData, width, height, resultCanvas) {
     return gray;
   }
   
-  // Calcula a magnitude do gradiente usando o operador Sobel
   function computeGradient(gray, width, height) {
     let grad = new Float32Array(width * height);
-    // Kernels Sobel para X e Y
+
     const sobelX = [-1, 0, 1, -2, 0, 2, -1, 0, 1];
     const sobelY = [-1, -2, -1, 0, 0, 0, 1, 2, 1];
     for (let y = 1; y < height - 1; y++) {

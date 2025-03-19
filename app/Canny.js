@@ -1,21 +1,11 @@
-/**
- * Processa a imagem utilizando o algoritmo de Canny.
- * @param {ImageData} imageData - Dados da imagem original.
- * @param {number} width - Largura da imagem.
- * @param {number} height - Altura da imagem.
- * @param {HTMLCanvasElement} resultCanvas - Canvas onde o resultado será exibido.
- */
 function processCanny(imageData, width, height, resultCanvas) {
-  // Converte para escala de cinza
   let grayData = toGrayscale(imageData);
 
-  // Suavização: aplica filtro Gaussiano para reduzir ruídos
   let sigma = 1.0;
   let kernelSize = 5;
   let gaussian = createGaussianKernel(sigma, kernelSize);
   let blurred = convolute(grayData, width, height, gaussian, kernelSize, kernelSize);
 
-  // Calcula os gradientes usando os operadores de Sobel
   let sobelX = [
     -1, 0, 1,
     -2, 0, 2,
@@ -64,9 +54,6 @@ function processCanny(imageData, width, height, resultCanvas) {
   resultCtx.putImageData(resultImage, 0, 0);
 }
 
-/* Funções auxiliares para Canny */
-
-// Converte a imagem para escala de cinza (Float32Array)
 function toGrayscale(imageData) {
   const data = imageData.data;
   const gray = new Float32Array(imageData.width * imageData.height);
@@ -77,7 +64,6 @@ function toGrayscale(imageData) {
   return gray;
 }
 
-// Cria um kernel Gaussiano
 function createGaussianKernel(sigma, size) {
   const kernel = [];
   const mean = Math.floor(size / 2);
@@ -93,7 +79,6 @@ function createGaussianKernel(sigma, size) {
   return kernel.map(val => val / sum);
 }
 
-// Convolução para imagens representadas por array 1D (Float32Array)
 function convolute(input, width, height, kernel, kWidth, kHeight) {
   const output = new Float32Array(width * height);
   const halfKW = Math.floor(kWidth / 2);
@@ -119,7 +104,6 @@ function convolute(input, width, height, kernel, kWidth, kHeight) {
   return output;
 }
 
-// Supressão de não-máximos: afina as bordas mantendo apenas os picos da magnitude do gradiente
 function nonMaxSuppression(gradient, angle, width, height) {
   let output = new Float32Array(width * height);
   for (let y = 1; y < height - 1; y++) {
@@ -148,7 +132,6 @@ function nonMaxSuppression(gradient, angle, width, height) {
   return output;
 }
 
-// Histerese: aplica thresholds duplo e rastreamento para definir as bordas finais
 function hysteresis(image, width, height, lowThreshold, highThreshold) {
   let result = new Uint8Array(width * height);
   let strong = 255, weak = 25;
@@ -164,7 +147,6 @@ function hysteresis(image, width, height, lowThreshold, highThreshold) {
     }
   }
 
-  // Segunda passagem: rastreamento por histerese para conectar bordas fracas a fortes
   for (let y = 1; y < height - 1; y++) {
     for (let x = 1; x < width - 1; x++) {
       let idx = y * width + x;
@@ -187,7 +169,6 @@ function hysteresis(image, width, height, lowThreshold, highThreshold) {
     }
   }
 
-  // Converte pixels fortes para 1 e os demais para 0
   let finalEdges = new Uint8Array(width * height);
   for (let i = 0; i < result.length; i++) {
     finalEdges[i] = result[i] === strong ? 1 : 0;
