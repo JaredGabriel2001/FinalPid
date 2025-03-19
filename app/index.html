@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Processamento de Imagens - Algoritmos</title>
+  <style>
+    body { font-family: Arial, sans-serif; }
+    canvas { border: 1px solid #000; margin: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Processamento de Imagens - Algoritmos</h1>
+  
+  <!-- Seletor de algoritmo -->
+  <label for="algSelect">Selecione o algoritmo:</label>
+  <select id="algSelect">
+    <option value="marr">Marr-Hildreth</option>
+    <option value="canny">Canny</option>
+    <option value="otsu">Otsu</option>
+    <option value="watershed">Watershed</option>
+  </select>
+  <br><br>
+  
+  <!-- Input para escolha da imagem -->
+  <input type="file" id="upload" accept="image/*" />
+  <br><br>
+  
+  <!-- Canvas para exibir a imagem original e o resultado -->
+  <canvas id="canvas"></canvas>
+  <canvas id="result"></canvas>
+
+  <!-- Scripts dos algoritmos -->
+  <script src="Marr-Hildreth.js"></script>
+  <script src="Canny.js"></script>
+  <script src="Otsu.js"></script>
+  
+  <!-- Script principal -->
+  <script src="main.js"></script>
+</body>
+</html>
