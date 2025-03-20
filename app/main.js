@@ -15,17 +15,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Aplica o algoritmo selecionado sobre a imagem armazenada
     const algorithm = algSelect.value;
     switch (algorithm) {
-        case "marr":
-            processMarrHildreth(currentImageData, canvas.width, canvas.height, resultCanvas);
+      case "marr":
+        processMarrHildreth(currentImageData, canvas.width, canvas.height, resultCanvas);
         break;
-        case "canny":
-            processCanny(currentImageData, canvas.width, canvas.height, resultCanvas);
+      case "canny":
+        processCanny(currentImageData, canvas.width, canvas.height, resultCanvas);
         break;
-        case "otsu":
-            processOtsu(currentImageData, canvas.width, canvas.height, resultCanvas);
+      case "otsu":
+        processOtsu(currentImageData, canvas.width, canvas.height, resultCanvas);
         break;
-        case "watershed":
-            processWatershed(currentImageData, canvas.width, canvas.height, resultCanvas);
+      case "watershed":
+        processWatershed(currentImageData, canvas.width, canvas.height, resultCanvas);
+        break;
+      case "freeman":
+        processFreeman(currentImageData, canvas.width, canvas.height, resultCanvas);
         break;
       default:
         alert("Algoritmo selecionado ainda não foi implementado.");
