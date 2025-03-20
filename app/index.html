@@ -6,6 +6,8 @@
   <style>
     body { font-family: Arial, sans-serif; }
     canvas { border: 1px solid #000; margin: 10px; }
+    .filter-buttons { margin: 10px 0; display: none; }
+    .filter-buttons button { margin-right: 5px; }
   </style>
 </head>
 <body>
@@ -19,8 +21,14 @@
     <option value="otsu">Otsu</option>
     <option value="watershed">Watershed</option>
     <option value="freeman">Cadeia de Freeman</option>
+    <option value="box">Filtro Box</option>
   </select>
   <br><br>
+  
+  <!-- Contêiner para os botões de filtro box -->
+  <div id="filterButtons" class="filter-buttons">
+    <!-- Botões serão gerados dinamicamente -->
+  </div>
   
   <!-- Input para escolha da imagem -->
   <input type="file" id="upload" accept="image/*" />
@@ -36,6 +44,7 @@
   <script src="Otsu.js"></script>
   <script src="Watershed.js"></script>
   <script src="Freeman.js"></script>
+  <script src="BoxFilter.js"></script>
   <!-- Script principal -->
   <script src="main.js"></script>
 </body>
