@@ -1,4 +1,7 @@
-// IntensitySegmentation.js
+/*
+Divide os pixels de uma imagem em escala de cinza em faixas de intensidade, 
+atribuindo novos valores fixos a cada faixa (ex.: 0-50 vira 25), simplificando a imagem.
+*/ 
 function processIntensitySegmentation(imageData, width, height, resultCanvas) {
     // 1. Converte a imagem para escala de cinza
     const grayData = toGrayscale(imageData);

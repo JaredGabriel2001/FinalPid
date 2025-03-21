@@ -1,4 +1,7 @@
-// Otsu.js
+/*
+Binariza uma imagem em escala de cinza, separando pixels em dois grupos 
+(fundo e objeto) com base em um limiar ótimo que maximiza a variância entre as classes.
+*/
 function processOtsu(imageData, width, height, resultCanvas) {
   // 1. Suaviza a imagem para reduzir reflexos
   const smoothedData = gaussianBlur(imageData, width, height);

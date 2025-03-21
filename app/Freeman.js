@@ -1,4 +1,7 @@
-// Freeman.js - Encapsulado para evitar conflitos
+/*
+Codifica o contorno de um objeto em uma imagem binária como uma sequência de direções (0 a 7), 
+seguindo a borda em 8-conectividade, para compactação ou análise de forma.
+*/ 
 (function() {
   /**
    * Processa a imagem utilizando o Método de Otsu para binarização e retorna a Cadeia de Freeman.

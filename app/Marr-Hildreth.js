@@ -1,3 +1,8 @@
+/*
+Detecta bordas em uma imagem em escala de cinza usando o operador Laplaciano da Gaussiana (LoG). 
+Suaviza a imagem com um filtro Gaussiano e encontra bordas onde a segunda derivada cruza zero.
+*/
+
 function processMarrHildreth(imageData, width, height, resultCanvas) {
   let grayData = toGrayscale(imageData);
 

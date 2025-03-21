@@ -1,3 +1,8 @@
+/*
+Detecta bordas em uma imagem em escala de cinza. Suaviza com Gaussiana, 
+calcula gradientes (Sobel), suprime não-máximos, e usa limiares duplos para conectar bordas fortes.
+*/
+
 function processCanny(imageData, width, height, resultCanvas) {
   let grayData = toGrayscale(imageData);
 

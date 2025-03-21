@@ -1,4 +1,7 @@
-// Watershed.js
+/*
+Segmenta uma imagem em regiões, tratando-a como uma "topografia". 
+Usa gradientes para encontrar "bacias" (regiões) e "divisores de águas" (fronteiras) entre elas.
+*/
 function processWatershed(imageData, width, height, resultCanvas) {
   // 1. Converte a imagem para escala de cinza
   const grayData = toGrayscale(imageData);
