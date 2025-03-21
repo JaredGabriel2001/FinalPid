@@ -54,6 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
         case "freeman":
           processFreeman(currentImageData, canvas.width, canvas.height, resultCanvas);
           break;
+        case "intensity":
+          processIntensitySegmentation(currentImageData, canvas.width, canvas.height, resultCanvas);
+          break;
         default:
           alert("Algoritmo selecionado ainda não foi implementado.");
       }
